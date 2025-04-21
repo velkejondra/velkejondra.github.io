@@ -96,6 +96,7 @@ export interface ExperienceItem {
   period: string;
   description: string; // Or maybe a list of bullet points: string[]
   url?: string; // Optional link to company/project
+  tags?: string[]; // Optional tags for the experiencej
 }
 
 // Assuming ProjectFrontmatter is similar to PhotoblogFrontmatter but maybe without specific photo fields

@@ -27,15 +27,27 @@ const { experienceHistory, showViewAll = false, viewAllUrl = "/experience" } = A
              {/* Optional: Link company name if URL provided */}
              {item.url ? (
                <Anchor url={item.url} external class="text-lg font-semibold">
-                 {item.company}
+                 {item.role}
                </Anchor>
              ) : (
-               <h4 class="text-lg font-semibold">{item.company}</h4>
+               <h4 class="text-lg font-semibold">{item.role}</h4>
              )}
-            <span class="text-sm -zag-text italic">{item.period}</span>
+            <span class="text-sm italic">{item.period}</span>
           </div>
-          <p class="font-medium">{item.role}</p>
-          <p class="zag-text text-sm mt-1">{item.description}</p> {/* Adjust if description is an array */}
+          <p class="font-medium">{item.company}</p>
+          <p class=" text-sm mt-1">{item.description}</p> {/* Adjust if description is an array */}
+          {item.tags && item.tags.length > 0 && (
+              <div class="flex flex-wrap gap-2"> {/* Container for tags */}
+                {item.tags.map((tag) => (
+                  // Style each tag as a small badge/pill
+                  <span class="-zag-text -zag-bg zag-transition px-2 py-0.5 text-xs font-semibold rounded">
+                    {tag}
+                  </span>
+                  // You could also use a dedicated <Tag /> component if you have one
+                ))}
+              </div>
+            )}
+
         </li>
       ))
     )

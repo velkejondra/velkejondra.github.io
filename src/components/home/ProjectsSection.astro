@@ -12,9 +12,15 @@ const { featuredProjects } = Astro.props;
 ---
 
 <div class="flex justify-between items-center w-full">
-  <h3 class="font-display text-lg sm:text-xl leading-loose">{GLOBAL.projectsName}</h3>
-  {/* Decide if you still want a "View All" link even if individual projects aren't pages */}
-  {/* If you have a dedicated /projects page listing these, keep the link. Otherwise, remove it. */}
+  <h3 class="font-display text-lg sm:text-xl leading-loose">
+    {GLOBAL.projectsName}
+  </h3>
+  {
+    /* Decide if you still want a "View All" link even if individual projects aren't pages */
+  }
+  {
+    /* If you have a dedicated /projects page listing these, keep the link. Otherwise, remove it. */
+  }
   <!-- <Anchor url="/projects" class="text-base">{GLOBAL.viewAll}</Anchor> -->
 </div>
 <ul class="my-8">
@@ -25,23 +31,60 @@ const { featuredProjects } = Astro.props;
       featuredProjects.map((project) => {
         const tags = project.tags ?? []; // Ensure tags is an array
         return (
-          <li class="py-4 border-b border-dashed -border-color"> {/* Added structure from snippet */}
+          <li class="py-4 border-b border-dashed -border-color">
+            {" "}
+            {/* Added structure from snippet */}
             <h4 class="text-lg font-medium mb-1">{project.title}</h4>
             <p class="zag-text text-sm mb-2">{project.description}</p>
-
             <div class="flex flex-wrap items-center gap-x-4 gap-y-2 text-sm">
               {/* Conditional Links */}
               {project.githubUrl && (
-                <Anchor url={project.githubUrl} external class="flex items-center gap-1 hover:underline">
+                <Anchor
+                  url={project.githubUrl}
+                  external
+                  class="flex items-center gap-1 hover:underline"
+                >
                   {/* Optional: Add an SVG icon for GitHub */}
-                  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-1.5 6-6.5.08-1.39-.48-2.7-1.5-3.5.48-1.1.4-2.3-.1-3.5 0 0-1-.3-3.5 1.5a12.3 12.3 0 0 0-6.5 0C4.5 2.7 3.5 3 3.5 3c-.5 1.2-.6 2.4-.1 3.5A5.4 5.4 0 0 0 2 11.5c0 5 3 6.5 6 6.5a4.8 4.8 0 0 0-1 3.5v4"></path></svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="w-4 h-4"
+                  >
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-1.5 6-6.5.08-1.39-.48-2.7-1.5-3.5.48-1.1.4-2.3-.1-3.5 0 0-1-.3-3.5 1.5a12.3 12.3 0 0 0-6.5 0C4.5 2.7 3.5 3 3.5 3c-.5 1.2-.6 2.4-.1 3.5A5.4 5.4 0 0 0 2 11.5c0 5 3 6.5 6 6.5a4.8 4.8 0 0 0-1 3.5v4" />
+                  </svg>
                   GitHub
                 </Anchor>
               )}
               {project.liveUrl && (
-                <Anchor url={project.liveUrl} external class="flex items-center gap-1 hover:underline">
+                <Anchor
+                  url={project.liveUrl}
+                  external
+                  class="flex items-center gap-1 hover:underline"
+                >
                   {/* Optional: Add an SVG icon for external link */}
-                  <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6"></path><polyline points="15 3 21 3 21 9"></polyline><line x1="10" y1="14" x2="21" y2="3"></line></svg>
+                  <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    width="1em"
+                    height="1em"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="2"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="w-4 h-4"
+                  >
+                    <path d="M18 13v6a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V8a2 2 0 0 1 2-2h6" />
+                    <polyline points="15 3 21 3 21 9" />
+                    <line x1="10" y1="14" x2="21" y2="3" />
+                  </svg>
                   Live Demo
                 </Anchor>
               )}
@@ -66,6 +109,6 @@ const { featuredProjects } = Astro.props;
 </ul>
 
 <style>
-/* Add styles if needed, e.g., for link colors if not handled by Anchor */
-/* li:last-child { border-bottom: none; } */ /* Optional: remove border from last item */
+  /* Add styles if needed, e.g., for link colors if not handled by Anchor */
+  /* li:last-child { border-bottom: none; } */ /* Optional: remove border from last item */
 </style>
