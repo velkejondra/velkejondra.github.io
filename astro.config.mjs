@@ -13,5 +13,5 @@ export default defineConfig({
   integrations: [mdx()],
 
   site: "https://www.polanecky.me",
-  output: "static", 
+  output: "static",
 });

@@ -1,38 +1,70 @@
-name: Deploy to GitHub Pages
+name: Deploy Astro site to Pages with pnpm
 
 on:
-  # Trigger the workflow every time you push to the `main` branch
-  # Using a different branch name? Replace `main` with your branch’s name
+  # Runs on pushes targeting the default branch
   push:
-    branches: [ main ]
-  # Allows you to run this workflow manually from the Actions tab on GitHub.
+    branches: [main] # Replace $default-branch with your main branch name (e.g., main, master)
+
+  # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
-# Allow this job to clone the repo and create a page deployment
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
 permissions:
   contents: read
   pages: write
   id-token: write
 
+# Allow only one concurrent deployment, skipping runs queued between the run in-progress and latest queued.
+# However, do NOT cancel in-progress runs as we want to allow these production deployments to complete.
+concurrency:
+  group: "pages"
+  cancel-in-progress: false
+
 jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout your repository using git
+      - name: Checkout
         uses: actions/checkout@v4
-      - name: Install, build, and upload your site
-        uses: withastro/action@v3
+
+      # Add .nojekyll file to public directory if it doesn't exist
+      # This ensures it gets copied to the build output
+      - name: Create .nojekyll file
+        run: touch public/.nojekyll
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v3 # Installs pnpm
+        # Optional: specify pnpm version, otherwise it reads from package.json engines field
+        # with:
+        #   version: 8
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          # path: . # The root location of your Astro project inside the repository. (optional)
-          # node-version: 20 # The specific version of Node that should be used to build your site. Defaults to 20. (optional)
-          package-manager: pnpm@latest # The Node package manager that should be used to install dependencies and build your site. Automatically detected based on your lockfile. (optional)
+          node-version: "20" # Specify your Node.js version
+          cache: 'pnpm'      # Configure caching for pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile # Use pnpm install command
+
+      - name: Build
+        run: pnpm run build # Use pnpm run command
+
+      - name: Setup Pages
+        uses: actions/configure-pages@v5
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          # Upload entire directory by default - adjust if your build output is different than 'dist'
+          path: './dist' # Make sure this matches your Astro 'outDir' config
 
   deploy:
-    needs: build
-    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
     steps:
       - name: Deploy to GitHub Pages
         id: deployment
