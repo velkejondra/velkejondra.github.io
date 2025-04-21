@@ -6,12 +6,12 @@ export const GLOBAL = {
   username: "Ondrej Polanecky",
   rootUrl: "https://polanecky.me",
   shortDescription: "Software Engineer <br> focused on performance",
-  longDescription: "Zaggonaut is a retro-inspired theme for Astro, built using TypeScript, TailwindCSS, and Astro.",
+  // longDescription: "Zaggonaut is a retro-inspired theme for Astro, built using TypeScript, TailwindCSS, and Astro.",
 
   // Social media links
   githubProfile: "https://github.com/velkejondra",
   // twitterProfile: "https://twitter.com/",
-  linkedinProfile: "https://www.linkedin.com/",
+  linkedinProfile: "https://www.linkedin.com/in/ondrejpolanecky",
 
   // Common text names used throughout the site
   articlesName: "Articles",
