@@ -1,0 +1,101 @@
+---
+// src/components/ImageGallery.astro
+import { Image } from 'astro:assets';
+import 'glightbox/dist/css/glightbox.min.css';
+
+export interface Props {
+  imagePaths: string[];
+  altText?: string;
+  galleryId?: string;
+}
+
+const { imagePaths = [], altText = "Gallery image", galleryId = `gallery-${Date.now()}` } = Astro.props;
+
+const base = import.meta.env.BASE_URL;
+
+// Helper function to create the correct public path for LOCAL images
+function getPublicPath(src: string): string {
+  const baseWithSlash = base.endsWith('/') ? base : `${base}/`;
+  const srcWithoutSlash = src.startsWith('/') ? src.substring(1) : src;
+  const path = `${baseWithSlash}${srcWithoutSlash}`;
+  return path.replace(/\/+/g, '/');
+}
+
+// Helper function to check if a path is an external URL
+function isExternalUrl(path: string): boolean {
+  return path.startsWith('http://') || path.startsWith('https://');
+}
+---
+
+<div id={galleryId} class="image-gallery grid grid-cols-2 md:grid-cols-3 gap-4 my-6">
+  {imagePaths.map((src, index) => {
+    // Determine the correct path to use based on whether it's external or local
+    const imageSrc = isExternalUrl(src) ? src : getPublicPath(src);
+
+    return (
+      <a
+        href={imageSrc} 
+        class="glightbox"
+        data-gallery={galleryId}
+        aria-label={`View image ${index + 1} of ${imagePaths.length} in full size`}
+      >
+        {/* Use Astro's Image component for both.
+            Note: Optimization features might be limited for external URLs. */}
+        <Image
+          src={imageSrc} 
+          alt={`${altText} ${index + 1}`}
+          width={400}
+          height={300}
+          format="webp" 
+          quality={80} 
+          class="rounded shadow-md object-cover w-full h-auto cursor-pointer transition-transform duration-200 hover:scale-105"
+          loading="lazy"
+        />
+      </a>
+    );
+  })}
+</div>
+
+{/* Client-side script remains the same */}
+<script type="module" define:vars={{ galleryId }}>
+  let lightboxInstance = null;
+
+  async function initializeGallery() {
+    console.log(`[${galleryId}] Attempting to initialize GLightbox...`);
+    try {
+      const GLightbox = (await import('glightbox')).default;
+      if (!GLightbox) {
+        console.error(`[${galleryId}] Failed to load GLightbox library.`);
+        return;
+      }
+      if (lightboxInstance) {
+        try { lightboxInstance.destroy(); } catch (e) { console.warn(`[${galleryId}] Error destroying previous lightbox:`, e); }
+        lightboxInstance = null;
+      }
+      const galleryElement = document.getElementById(galleryId);
+      if (!galleryElement) {
+        console.warn(`[${galleryId}] Gallery element not found in DOM during init attempt.`);
+        return;
+      }
+      lightboxInstance = GLightbox({
+        selector: `#${galleryId} .glightbox`,
+        touchNavigation: true,
+        loop: true,
+      });
+      console.log(`[${galleryId}] GLightbox initialized successfully.`);
+    } catch (error) {
+      console.error(`[${galleryId}] Error during GLightbox initialization:`, error);
+    }
+  }
+  document.addEventListener('astro:page-load', initializeGallery, { once: true });
+  document.addEventListener('astro:after-swap', initializeGallery);
+</script>
+
+<style>
+  /* Styles remain the same */
+  .image-gallery a:focus-visible {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+    border-radius: 0.375rem;
+  }
+</style>

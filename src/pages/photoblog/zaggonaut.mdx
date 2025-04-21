@@ -1,0 +1,17 @@
+---
+layout: ../../layouts/PhotoblogLayout.astro
+title: Thajsko
+description: vyjel jsem na studijni pobyt do thajska
+tags: ["thajsko", "vylet", "studijni pobyt"]
+featured: true
+filename: zaggonaut
+---
+import ImageGallery from '../../components/ImageGallery.astro'; // Adjust path
+import { Image } from 'astro:assets';
+import branadrsna from '../../../public/branadrsna.jpg';
+
+# jsem v thajsku a tady je fotka nejaky brany
+
+lorem impsum pico
+
+<Image src={branadrsna} formats={['jpg']} alt="A description of my image." />

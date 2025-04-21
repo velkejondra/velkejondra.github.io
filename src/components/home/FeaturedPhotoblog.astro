@@ -1,0 +1,34 @@
+---
+import type { PhotoblogFrontmatter } from "../../lib/types";
+import { GLOBAL } from "../../lib/variables";
+import Anchor from "../common/Anchor.astro";
+import PhotoblogSnippet from "../PhotoblogSnippet.astro";
+
+type Props = {
+  featuredPhotoblog: Array<PhotoblogFrontmatter>;
+}
+
+const { featuredPhotoblog } = Astro.props;
+---
+
+<div class="flex justify-between items-center w-full">
+  <h3 class="font-display text-lg sm:text-xl leading-loose">{GLOBAL.photoblogName}</h3>
+  <Anchor url="/photoblog" class="text-base">{GLOBAL.viewAll}</Anchor>
+</div>
+<ul class="my-8">
+  {
+    (featuredPhotoblog.length === 0 && <p>{GLOBAL.noPhotoblog}</p>) ||
+      featuredPhotoblog.map((photoblog) => (
+        <li>
+          <PhotoblogSnippet
+            title={photoblog.title}
+            description={photoblog.description}
+            url={photoblog.filename}
+            githubUrl={photoblog.githubUrl}
+            liveUrl={photoblog.liveUrl}
+            tags={photoblog.tags ?? []}
+          />
+        </li>
+      ))
+  }
+</ul>

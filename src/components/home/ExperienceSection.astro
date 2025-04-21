@@ -1,0 +1,43 @@
+---
+import type { ExperienceItem } from "../../lib/types"; // Adjust path if needed
+import { GLOBAL } from "../../lib/variables";
+import Anchor from "../common/Anchor.astro";
+
+interface Props {
+  experienceHistory: ExperienceItem[];
+  showViewAll?: boolean;
+  viewAllUrl?: string;
+}
+
+const { experienceHistory, showViewAll = false, viewAllUrl = "/experience" } = Astro.props;
+---
+
+<div class="flex justify-between items-center w-full">
+  <h3 class="font-display text-lg sm:text-xl leading-loose">{GLOBAL.experienceName}</h3>
+  {showViewAll && <Anchor url={viewAllUrl} class="text-base">{GLOBAL.viewAll}</Anchor>}
+</div>
+<ul class="my-8 space-y-6">
+  {
+    experienceHistory.length === 0 ? (
+      <p class="zag-text">{GLOBAL.noExperience}</p>
+    ) : (
+      experienceHistory.map((item) => (
+        <li class="flex flex-col gap-1">
+          <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline">
+             {/* Optional: Link company name if URL provided */}
+             {item.url ? (
+               <Anchor url={item.url} external class="text-lg font-semibold">
+                 {item.company}
+               </Anchor>
+             ) : (
+               <h4 class="text-lg font-semibold">{item.company}</h4>
+             )}
+            <span class="text-sm -zag-text italic">{item.period}</span>
+          </div>
+          <p class="font-medium">{item.role}</p>
+          <p class="zag-text text-sm mt-1">{item.description}</p> {/* Adjust if description is an array */}
+        </li>
+      ))
+    )
+  }
+</ul>

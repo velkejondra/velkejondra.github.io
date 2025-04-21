@@ -1,0 +1,35 @@
+---
+import type { SkillCategory } from "../../lib/types"; // Adjust path if needed
+import { GLOBAL } from "../../lib/variables";
+
+interface Props {
+  skillCategories: SkillCategory[];
+}
+
+const { skillCategories } = Astro.props;
+---
+
+<div class="flex justify-between items-center w-full">
+  <h3 class="font-display text-lg sm:text-xl leading-loose">{GLOBAL.skillsName}</h3>
+  {/* Typically no "View All" for skills, but you could add one if needed */}
+</div>
+<div class="my-8 space-y-6">
+  {
+    skillCategories.length === 0 ? (
+      <p class="zag-text">{GLOBAL.noSkills}</p>
+    ) : (
+      skillCategories.map((category) => (
+        <div>
+          <h4 class="text-base font-semibold mb-2">{category.name}</h4>
+          <div class="flex flex-row flex-wrap gap-2">
+            {category.skills.map((skill) => (
+              <span class="-zag-text -zag-bg zag-transition px-2 py-1 text-sm font-semibold rounded"> {/* Added rounded class */}
+                {skill}
+              </span>
+            ))}
+          </div>
+        </div>
+      ))
+    )
+  }
+</div>

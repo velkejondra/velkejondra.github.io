@@ -1,0 +1,52 @@
+---
+import type { EducationItem } from "../../lib/types"; // Adjust path if needed
+import { GLOBAL } from "../../lib/variables";
+import Anchor from "../common/Anchor.astro"; // Assuming Anchor component exists
+
+interface Props {
+  educationHistory: EducationItem[];
+  showViewAll?: boolean; // Optional prop to show/hide the "View All" link
+  viewAllUrl?: string; // URL for the "View All" link
+}
+
+const {
+  educationHistory,
+  showViewAll = false,
+  viewAllUrl = "/education",
+} = Astro.props;
+---
+
+<div class="flex justify-between items-center w-full">
+  <h3 class="font-display text-lg sm:text-xl leading-loose">
+    {GLOBAL.educationName}
+  </h3>
+  {
+    showViewAll && (
+      <Anchor url={viewAllUrl} class="text-base">
+        {GLOBAL.viewAll}
+      </Anchor>
+    )
+  }
+</div>
+<ul class="my-8 space-y-6">
+  {
+    educationHistory.length === 0 ? (
+      <p class="zag-text">{GLOBAL.noEducation}</p>
+    ) : (
+      educationHistory.map((item) => (
+      <li class="flex flex-col gap-1">
+  {/* Re-added sm:flex-row, sm:justify-between, sm:items-baseline */}
+  <div class="flex flex-col sm:flex-row sm:justify-between sm:items-baseline">
+    <h4 class="text-lg font-semibold">{item.description}</h4>
+    {/* Removed mb-1 from the span */}
+    <span class="text-sm italic flex-shrink-0 ml-2">{item.period}</span> {/* Added flex-shrink-0 and ml-2 */}
+  </div>
+    <h5 class="text-lg font-semibold">{item.degree}</h4>
+  <p class="font-medium">{item.institution}</p>
+  {item.description && <p class="zag-text text-sm mt-1">{item.description}</p>}
+</li>
+
+      ))
+    )
+  }
+</ul>
