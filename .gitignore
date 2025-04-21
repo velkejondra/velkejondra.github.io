@@ -23,7 +23,6 @@ pnpm-debug.log*
 # jetbrains setting folder
 .idea/
 
-pnpm-lock.yaml
 
 .vscode/
 .wake/
