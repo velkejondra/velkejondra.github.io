@@ -5,7 +5,8 @@ export const GLOBAL = {
   // Site metadata
   username: "Ondrej Polanecky",
   rootUrl: "https://polanecky.me",
-  shortDescription: "Software Engineer <br> focused on performance",
+  position: "Software Engineer",
+  shortDescription: "focused on performance and distributed systems",
   // longDescription: "Zaggonaut is a retro-inspired theme for Astro, built using TypeScript, TailwindCSS, and Astro.",
 
   // Social media links

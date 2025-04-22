@@ -1,5 +1,4 @@
 ---
-// src/pages/index.astro
 import Layout from "../layouts/Layout.astro";
 import Hero from "../components/home/Hero.astro";
 import Section from "../components/common/Section.astro";
@@ -8,8 +7,6 @@ import EducationSection from "../components/home/EducationSection.astro";
 import ProjectsSection from "../components/home/ProjectsSection.astro";
 import ExperienceSection from "../components/home/ExperienceSection.astro";
 import SkillsSection from "../components/home/SkillsSection.astro";
-import FeaturedPhotoblog from "../components/home/FeaturedPhotoblog.astro"; // Keep existing ones if needed
-import FeaturedArticles from "../components/home/FeaturedArticles.astro"; // Keep existing ones if needed
 
 import { GLOBAL } from "../lib/variables";
 import { featuredArticles, featuredPhotoblog } from "../lib/featured"; // Assuming these exist
@@ -44,9 +41,9 @@ const experienceHistory: ExperienceItem[] = [
     role: "Software Engineer",
     period: "September 2021 - Present",
     description:
-      "Research and management of Ceph clusters and distributed storage solutions. Developed a logging tool that sniffs the cephfs journal in C++. Now working on an NGINX fork in C and LUA. Development of new NGINX modules and profiling/debugging.",
+      "Research and management of Ceph clusters and distributed storage solutions. Developed a logging tool that sniffs the cephfs journal in C++. Now working on an NGINX fork in C and Lua. Development of new NGINX modules and profiling/debugging.",
     url: "",
-    tags: ["C", "Lua", "NGINX", "Ceph", "Distributed Systems"],
+    tags: ["C/C++", "Lua", "NGINX", "Ceph", "Distributed Systems"],
   },
   {
     company: "Netio products a.s.",
@@ -73,25 +70,23 @@ const featuredProjects: ProjectFrontmatter[] = [
   {
     title: "Sharing of HTTP cache between webservers",
     description:
-      "Bachelor's thesis focused on improving cache performance of web servers in a multilayer setup.",
-    githubUrl: "",
-    liveUrl: "",
-    tags: ["Lua", "C", "Bloom Filters", "Web Servers", "Caching"],
+      "My bachelor's thesis focused on improving cache performance of web servers in a multilayer setup.",
+    liveUrl: "https://dspace.cvut.cz/handle/10467/116053",
+    tags: ["C", "Bloom Filters", "Lua", "Web Servers", "Distributed Cache"],
   },
   {
     title: "Chess engine",
     description:
       "Graduation project from high school. Bitmaps, Transposition tables, Alpha-Beta pruning. Created custom GUI and key-value file database of moves.",
-    githubUrl: "",
-    liveUrl: "",
-    tags: ["C++", "GUI", "Databases", "AI", "Game Development"],
+    githubUrl: "https://github.com/velkejondra/ondrosachy",
+    tags: ["C++", "Engine", "Databases", "AI", "High School Project"],
   }, // Tags inferred
 ];
 
 const skillCategories: SkillCategory[] = [
   {
     name: "Languages with professional experience",
-    skills: ["C", "C++", "Lua", "Python", "SQL", "Html", "Css", "Javascript"],
+    skills: ["C", "C++", "Lua", "Python", "SQL", "HTML", "CSS", "JavaScript"],
   }, // [cite: 1, 10]
   {
     name: "Software/Frameworks",
@@ -99,11 +94,11 @@ const skillCategories: SkillCategory[] = [
       "NGINX",
       "Ceph",
       "RocksDB",
-      "Freertos",
-      "Lwip",
+      "FreeRTOS",
+      "lwIP",
       "Espressif",
       "Flask",
-      "Sqlalchemy",
+      "SQLAlchemy",
     ],
   }, // [cite: 1, 7, 10]
   { name: "Tools", skills: ["Ansible", "Git", "Docker", "Kubernetes"] }, // [cite: 1] Git added based on GitHub link [cite: 1]
